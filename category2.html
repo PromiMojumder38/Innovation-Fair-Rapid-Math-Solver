@@ -63,7 +63,7 @@
                 document.getElementById("clock").textContent = seconds + " seconds left";
                 if (seconds <= 0) {
                     clearInterval(countdown);
-                    
+                    document.getElementById("submitButton").style.display = "none";
                     }
                 seconds--;
             }, 1000);
@@ -81,7 +81,8 @@
                 document.getElementById("score").textContent = "You have solved " + correctAnswers + " out of 10 problems.";
                 currentProblem++;
                 showProblem(currentProblem); // Corrected argument here
-            } else if (currentProblem >= totalProblems) {
+            } else if (currentProblem == totalProblems) {
+                document.getElementById("submitButton").style.display = "none";
                 document.getElementById("score").textContent = "You have solved " + correctAnswers + " out of 10 problems.";
             }
             document.getElementById("resultDiv").style.display = "block"; // Show the result message
