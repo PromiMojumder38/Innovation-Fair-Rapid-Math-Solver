@@ -1,0 +1,101 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Category Selection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+    text-align: center;
+    font-family: 'Poppins', Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #333;
+    margin-top: 20px;
+    font-size: 28px; /* Increase the font size for the heading */
+}
+
+form {
+    margin: 20px;
+}
+
+label {
+    font-weight: 600;
+    display: block; /* Make labels block-level elements */
+    margin-bottom: 10px; /* Add some space below labels */
+}
+
+select {
+    padding: 10px;
+    font-size: 16px;
+    width: 100%; /* Make the select element full-width */
+    border: 1px solid #ccc; /* Add a light border */
+    border-radius: 5px;
+    background-color: #fff; /* White background */
+    margin-top: 5px; /* Add some space above the select */
+}
+
+input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px; /* Add some space above the submit button */
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+    </style>
+</head>
+
+<body>
+    <h1>Choose a Category</h1>
+    <form id="categoryForm">
+        <!-- Use a hidden field to send the start signal -->
+        <input type="hidden" name="start" value="true">
+        <label for="category">Select a category:</label>
+        <select id="category" name="category">
+            <option value="category1">Category 1</option>
+            <option value="category2">Category 2</option>
+            <option value="category3">Category 3</option>
+        </select>
+        <input type="submit" value="Start">
+    </form>
+
+    <script>
+        document.getElementById("categoryForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get the selected category
+            var selectedCategory = document.getElementById("category").value;
+
+            // Redirect to different pages based on the selected category
+            switch (selectedCategory) {
+                case "category1":
+                    window.location.href = "category1.html";
+                    break;
+                case "category2":
+                    window.location.href = "category2.html";
+                    break;
+                case "category3":
+                    window.location.href = "category3.html";
+                    break;
+                default:
+                    alert("Invalid category selection");
+            }
+        });
+    </script>
+</body>
+</html>

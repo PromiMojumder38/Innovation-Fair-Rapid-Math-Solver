@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Category 1 - Problem Solver</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body>
+    <h1>Category 1 - Problem Solver</h1>
+
+    <div id="categoryDiv">
+        <button id="startButton">Start</button>
+    </div>
+
+    <div id="problemDiv" style="display: none;">
+        <p id="problemDescription">Problem 1:</p>
+        <!-- Add your first problem description here -->
+        <input type="text" id="answerInput" placeholder="Your answer">
+        <button id="submitButton">Submit</button>
+        <div id="clock">60 seconds left</div>
+        <div id="resultDiv">
+            <p id="resultMessage"></p>
+            <p id="score">You've solved 0 out of 10 problems.</p>
+            
+        </div>
+    </div>
+
+    
+    <div id="answerDiv" style="display: none;">
+        <p id="correctAnswerMessage">Correct Answer: <span id="correctAnswer"></span></p>
+    </div>
+
+    <script>
+        var countdown;
+        var currentProblem = 0; // Initialize to 0
+        var totalProblems = 2; // Set the correct total number of problems
+        var correctAnswers = 0;
+
+        // Define your questions and answers
+        var questions = [
+            "What is 2 + 2?",
+            "What is the capital of France?"
+            // Add more questions here
+        ];
+
+        var answers = [
+            "4",
+            "Paris"
+            // Add more answers here
+        ];
+
+        function showProblem(problemNumber) {
+            document.getElementById("problemDescription").textContent = "Problem " + problemNumber + ": " + questions[problemNumber - 1];
+            document.getElementById("answerInput").value = "";
+            document.getElementById("resultDiv").style.display = "block";
+            document.getElementById("answerDiv").style.display = "none";
+            document.getElementById("problemDiv").style.display = "block";
+        }
+
+        function startCountdown() {
+            var seconds = 60;
+            countdown = setInterval(function () {
+                document.getElementById("clock").textContent = seconds + " seconds left";
+                if (seconds <= 0) {
+                    clearInterval(countdown);
+                    
+                    }
+                seconds--;
+            }, 1000);
+        }
+
+        function showResult(isCorrect) {
+            if (isCorrect) {
+                correctAnswers++;
+                document.getElementById("resultMessage").textContent = "Correct!";
+            } else {
+                document.getElementById("resultMessage").textContent = "Incorrect answer.";
+            }
+
+            if (currentProblem < totalProblems && isCorrect) {
+                document.getElementById("score").textContent = "You have solved " + correctAnswers + " out of 10 problems.";
+                currentProblem++;
+                showProblem(currentProblem); // Corrected argument here
+            } else if (currentProblem >= totalProblems) {
+                document.getElementById("score").textContent = "You have solved " + correctAnswers + " out of 10 problems.";
+            }
+            document.getElementById("resultDiv").style.display = "block"; // Show the result message
+        }
+
+       
+
+        document.getElementById("startButton").addEventListener("click", function () {
+            document.getElementById("categoryDiv").style.display = "none";
+            currentProblem = 1; // Reset to 1 when starting
+            showProblem(currentProblem);
+            startCountdown();
+        });
+
+        document.getElementById("submitButton").addEventListener("click", function () {
+            var answer = document.getElementById("answerInput").value;
+            if (answer.trim().toLowerCase() === answers[currentProblem - 1].toLowerCase()) {
+                showResult(true);
+            } else {
+                showResult(false);
+            }
+        });
+    </script>
+</body>
+</html>
