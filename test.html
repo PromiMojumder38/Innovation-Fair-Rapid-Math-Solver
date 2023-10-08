@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rapid Math Puzzle</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1><u>Rapid Math Puzzle</u></h1>
+    <h2 style="color: darkblue">Dear Participant,</h2>
+    <h2 style="color: darkslateblue">
+        You already solved more than 7 problems in the contest. This means that you had a chance to be a Rapid Math Solver. You should be given a second chance, right? Here is a problem for you, which you have to solve in 3 minutes. In this problem, you are actually getting a puzzle, which has a numerical solution. In the submit box below the question, you have to input your answer before the time ends. But keep in mind that you can submit your answer only once. Happy problem solving.
+    </h2>
+    <div id="categoryDiv">
+        <button id="startButton">Start</button>
+    </div>
+
+    <div id="problemDiv" style="display: none;">
+        <p id="problemDescription"><b>Problem:</b></p>
+        <input type="text" id="answerInput" placeholder="Submit your answer">
+        <button id="submitButton">Submit</button>
+        <div id="clock" style="display: block;">180 seconds left</div>
+    </div>
+    <div id="resultDiv" style="display: none;">
+        <p id="resultMessage"></p>
+    </div>
+
+    <script>
+        var countdown;
+        var currentProblem = 0;
+        var totalProblems = 1;
+        var correctAnswers = 0;
+        var isSubmitButtonVisible = true;
+
+        var questions = [
+            "What is 25+14?",
+            "If you have 45 candies and you eat 12, how many do you have left?"
+            // Add more questions here
+        ];
+
+        var answers = [
+            "39",
+            "33"
+            // Add more answers here
+        ];
+
+        function shuffleArraysTogether(questionsArray, answersArray) {
+            for (let i = questionsArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+
+                [questionsArray[i], questionsArray[j]] = [questionsArray[j], questionsArray[i]];
+                [answersArray[i], answersArray[j]] = [answersArray[j], answersArray[i]];
+            }
+        }
+
+        shuffleArraysTogether(questions, answers);
+
+        function showProblem(problemNumber) {
+            document.getElementById("problemDescription").textContent = "Problem " + problemNumber + ": " + questions[problemNumber - 1];
+            document.getElementById("answerInput").value = "";
+            document.getElementById("resultDiv").style.display = "none";
+            document.getElementById("problemDiv").style.display = "block";
+            document.getElementById("clock").style.display = "block"; // Show the timer
+            document.getElementById("submitButton").style.display = isSubmitButtonVisible ? "block" : "none";
+        }
+
+        function startCountdown() {
+            var seconds = 180;
+            countdown = setInterval(function () {
+                document.getElementById("clock").textContent = seconds + " seconds left";
+                if (seconds <= 0) {
+                    clearInterval(countdown);
+                    showResult(false, currentProblem);
+                }
+                seconds--;
+            }, 1000);
+        }
+
+        function showResult(isCorrect, problemNumber) {
+            if (isCorrect) {
+                correctAnswers++;
+                document.getElementById("resultMessage").textContent = "Congratulations! You have become a Rapid Math Solver now.";
+                isSubmitButtonVisible = false; // Hide the submit button on correct answer
+                document.getElementById("submitButton").style.display = "none";
+                document.getElementById("clock").style.display = "none"; // Hide the timer
+            } else {
+                document.getElementById("resultMessage").textContent = "Oh no! Your answer is incorrect.";
+            }
+
+            if (currentProblem < totalProblems && isCorrect) {
+                currentProblem++;
+                showProblem(currentProblem);
+            } else if (currentProblem == totalProblems) {
+                document.getElementById("resultDiv").style.display = "block";
+            }
+        }
+
+        document.getElementById("startButton").addEventListener("click", function () {
+            document.getElementById("categoryDiv").style.display = "none";
+            currentProblem = 1;
+            showProblem(currentProblem);
+            startCountdown();
+        });
+
+        document.getElementById("submitButton").addEventListener("click", function () {
+            var answer = document.getElementById("answerInput").value;
+            if (answer.trim().toLowerCase() === answers[currentProblem - 1].toLowerCase()) {
+                showResult(true, currentProblem);
+            } else {
+                showResult(false, currentProblem);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Category 1 - Problem Solver</title>
+    <title>Category B (Class 9-10) - Rapid Math Solver</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 
 </head>
 <body>
-    <h1>Category 1 - Problem Solver</h1>
+    <h1>Category B (Class 9-10) - Rapid Math Solver</h1>
 
     <div id="categoryDiv">
         <button id="startButton">Start</button>
@@ -17,7 +17,7 @@
         <!-- Add your first problem description here -->
         <input type="text" id="answerInput" placeholder="Your answer">
         <button id="submitButton">Submit</button>
-        <div id="clock">60 seconds left</div>
+        <div id="clock">120 seconds left</div>
         <div id="resultDiv">
             <p id="resultMessage"></p>
             <p id="score">You've solved 0 out of 10 problems.</p>
@@ -33,21 +33,50 @@
     <script>
         var countdown;
         var currentProblem = 0; // Initialize to 0
-        var totalProblems = 2; // Set the correct total number of problems
+        var totalProblems = 10; // Set the correct total number of problems
         var correctAnswers = 0;
 
         // Define your questions and answers
         var questions = [
-            "What is 2 + 2?",
-            "What is the capital of France?"
+            "Solve for x if 2x-5=15",
+            "Find the area of a rectangle with length 8 units and width 6 units.",
+            "Find the perimeter of a square with sides of length 9 units.",
+            "Find the tangent of a 45-degree angle.",
+            "Calculate the median of the following set of numbers: 8,12,15,21,24.",
+            "Solving for the system of equations: 2x+3y=11 and 4x-2y=6, find x+y.",
+            "Solve the quadratic equation: x^2-6x+9=0",
+            "Solve for x when log_2(x)=3",
+            "Find the value of sec(pi/3).",
+            "Find the value of a triangular pyramid with a base area of 24 square units and a height of 8 units."
             // Add more questions here
         ];
 
         var answers = [
-            "4",
-            "Paris"
+            "10",
+            "48",
+            "36",
+            "1",
+            "15",
+            "5",
+            "3",
+            "8",
+            "2",
+            "64"
             // Add more answers here
         ];
+        // Shuffle both questions and answers together while keeping pairs intact
+        function shuffleArraysTogether(questionsArray, answersArray) {
+            for (let i = questionsArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+
+                // Swap both questions and answers at the same positions
+                [questionsArray[i], questionsArray[j]] = [questionsArray[j], questionsArray[i]];
+                [answersArray[i], answersArray[j]] = [answersArray[j], answersArray[i]];
+            }
+        }
+
+        // Shuffle the questions and answers arrays together
+        shuffleArraysTogether(questions, answers);
 
         function showProblem(problemNumber) {
             document.getElementById("problemDescription").textContent = "Problem " + problemNumber + ": " + questions[problemNumber - 1];
@@ -58,7 +87,7 @@
         }
 
         function startCountdown() {
-            var seconds = 60;
+            var seconds = 120;
             countdown = setInterval(function () {
                 document.getElementById("clock").textContent = seconds + " seconds left";
                 if (seconds <= 0) {
